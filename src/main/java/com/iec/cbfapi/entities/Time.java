@@ -23,7 +23,15 @@ public class Time implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "time")
-    private List <Jogador> jogadores = new ArrayList<>();
+    private List<Jogador> jogadores = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "timeOrigem")
+    private List<Time> timeOrigem = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "timeDestino")
+    private List<Time> timeDestino = new ArrayList<>();
 
     public Time() {}
 

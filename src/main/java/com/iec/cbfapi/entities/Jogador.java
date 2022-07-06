@@ -5,6 +5,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "jogador")
@@ -23,6 +25,9 @@ public class Jogador implements Serializable {
     @JoinColumn(name = "id_time")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Time time;
+    
+    @OneToMany(mappedBy = "jogadores")
+    private List<Jogador> jogadores = new ArrayList<>();
     
     public Jogador(){}
 

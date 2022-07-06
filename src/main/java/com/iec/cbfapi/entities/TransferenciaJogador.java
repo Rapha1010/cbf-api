@@ -12,15 +12,27 @@ public class TransferenciaJogador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long timeOrigem;
-    private Long timeDestino;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_time_origem")
+    private Time timeOrigem;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_time_destino")
+    private Time timeDestino;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_jogador")
+    private Jogador jogador;
+    
     private String data;
     private float valor;
-
+    
     public TransferenciaJogador() {}
 
-    public TransferenciaJogador(Long id, Long timeOrigem, Long timeDestino, String data, float valor) {
+    public TransferenciaJogador(Long id, Jogador jogador, Time timeOrigem, Time timeDestino, String data, float valor) {
         this.id = id;
+        this.jogador = jogador;
         this.timeOrigem = timeOrigem;
         this.timeDestino = timeDestino;
         this.data = data;
@@ -35,19 +47,27 @@ public class TransferenciaJogador implements Serializable {
         this.id = id;
     }
 
-    public Long getTimeOrigem() {
+    public Jogador getJogador() {
+		return jogador;
+	}
+
+	public void setJogador(Jogador jogador) {
+		this.jogador = jogador;
+	}
+
+	public Time getTimeOrigem() {
         return timeOrigem;
     }
 
-    public void setTimeOrigem(Long timeOrigem) {
+    public void setTimeOrigem(Time timeOrigem) {
         this.timeOrigem = timeOrigem;
     }
 
-    public Long getTimeDestino() {
+    public Time getTimeDestino() {
         return timeDestino;
     }
 
-    public void setTimeDestino(Long timeDestino) {
+    public void setTimeDestino(Time timeDestino) {
         this.timeDestino = timeDestino;
     }
 

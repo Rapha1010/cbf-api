@@ -16,7 +16,7 @@ import com.iec.cbfapi.entities.Jogador;
 import com.iec.cbfapi.services.JogadorService;
 
 @RestController
-@RequestMapping(value = "/jogadores")
+@RequestMapping(value = "/cfb-api/jogadores")
 public class JogadorController {
 	
 	@Autowired
