@@ -1,3 +1,3 @@
 # cbf-api
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/Rapha1010/cbf-api/blob/master/diagrama.jpeg)
