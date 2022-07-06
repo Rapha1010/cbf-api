@@ -1,11 +1,16 @@
 package com.iec.cbfapi.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 @Entity
 @Table(name = "jogador")
 public class Jogador implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,16 +18,20 @@ public class Jogador implements Serializable {
     private String nome;
     private String pais;
     private String dataNascimento;
-    private Integer idTime;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "id_time")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Time time;
+    
     public Jogador(){}
 
-    public Jogador(Long id, String nome, String pais, String dataNascimento, Integer idTime) {
+    public Jogador(Long id, String nome, String pais, String dataNascimento, Time time) {
         this.id = id;
         this.nome = nome;
         this.pais = pais;
         this.dataNascimento = dataNascimento;
-        this.idTime = idTime;
+        this.time = time;
     }
 
     public Long getId() {
@@ -57,11 +66,40 @@ public class Jogador implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public Integer getIdTime() {
-        return idTime;
-    }
+	public Time getTime() {
+		return time;
+	}
 
-    public void setIdTime(Integer idTime) {
-        this.idTime = idTime;
-    }
+	public void setTime(Time time) {
+		this.time = time;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jogador other = (Jogador) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	
+    
+    
 }
