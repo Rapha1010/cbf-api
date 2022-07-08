@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/cfb-api/times")
+@RequestMapping(value = "/cbf-api/times")
 public class TimeController {
 
     @Autowired

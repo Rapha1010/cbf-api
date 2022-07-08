@@ -15,7 +15,7 @@ import com.iec.cbfapi.entities.TransferenciaJogador;
 import com.iec.cbfapi.services.TransferenciaJogadorService;
 
 @RestController
-@RequestMapping(value = "/cfb-api/transferencia-jogador")
+@RequestMapping(value = "/cbf-api/transferencia-jogador")
 public class TransferenciaJogadorController {
 	
 	@Autowired

@@ -3,7 +3,6 @@ package com.iec.cbfapi.entities;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +31,9 @@ public class Time implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "timeDestino")
     private List<Time> timeDestino = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "time")
+    private List<TimeTorneio> torneios = new ArrayList<>(); 
 
     public Time() {}
 
@@ -67,6 +69,14 @@ public class Time implements Serializable {
 
 	public List<Jogador> getJogadores() {
 		return jogadores;
+	}
+	
+	public List<TimeTorneio> getTime() {
+		return torneios;
+	}
+
+	public void setTime(List<TimeTorneio> torneios) {
+		this.torneios = torneios;
 	}
 
 	@Override

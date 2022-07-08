@@ -2,9 +2,11 @@ package com.iec.cbfapi.config;
 
 import com.iec.cbfapi.entities.Jogador;
 import com.iec.cbfapi.entities.Time;
+import com.iec.cbfapi.entities.Torneio;
 import com.iec.cbfapi.entities.TransferenciaJogador;
 import com.iec.cbfapi.repositories.JogadorRepository;
 import com.iec.cbfapi.repositories.TimeRepository;
+import com.iec.cbfapi.repositories.TorneioRepository;
 import com.iec.cbfapi.repositories.TransferenciaJogadorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class ApplicationConfig implements CommandLineRunner {
     
     @Autowired
     private TransferenciaJogadorRepository tjr;
+    
+    @Autowired
+    private TorneioRepository tnr;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -46,7 +52,14 @@ public class ApplicationConfig implements CommandLineRunner {
         TransferenciaJogador tj1 = new TransferenciaJogador(null,jd1,time1,time5,"22-12-76",20000);
         TransferenciaJogador tj2 = new TransferenciaJogador(null,jd2,time4,time2,"22-12-76",20000);
         TransferenciaJogador tj3 = new TransferenciaJogador(null,jd3,time5,time4,"22-12-76",20000);
+        
         tjr.saveAll(Arrays.asList(tj1, tj2, tj3));
+        
+        Torneio tn1 = new Torneio(null, "Libertadores", "América do Sul", "CONMEBOL");
+        Torneio tn2 = new Torneio(null, "Brasileirão", "Brasil", "CBF");
+        Torneio tn3 = new Torneio(null, "Copa do Brasil", "Brasil", "CBF");
+        
+        tnr.saveAll(Arrays.asList(tn1, tn2, tn3));
         
 
     }
