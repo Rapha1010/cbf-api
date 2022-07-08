@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.Date;
 
 @Configuration
 public class ApplicationConfig implements CommandLineRunner {
@@ -33,7 +35,6 @@ public class ApplicationConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // TODO Auto-generated method stub
 
         Time time1 = new Time(null, "Flamengo","RJ");
         Time time2 = new Time(null, "Palmeiras", "SP");
@@ -49,9 +50,9 @@ public class ApplicationConfig implements CommandLineRunner {
         
         jr.saveAll(Arrays.asList(jd1,jd2,jd3));
         
-        TransferenciaJogador tj1 = new TransferenciaJogador(null,jd1,time1,time5,"22-12-76",20000);
-        TransferenciaJogador tj2 = new TransferenciaJogador(null,jd2,time4,time2,"22-12-76",20000);
-        TransferenciaJogador tj3 = new TransferenciaJogador(null,jd3,time5,time4,"22-12-76",20000);
+        TransferenciaJogador tj1 = new TransferenciaJogador(null,jd1,time1,time5,20000);
+        TransferenciaJogador tj2 = new TransferenciaJogador(null,jd2,time4,time2,20000);
+        TransferenciaJogador tj3 = new TransferenciaJogador(null,jd3,time5,time4,20000);
         
         tjr.saveAll(Arrays.asList(tj1, tj2, tj3));
         

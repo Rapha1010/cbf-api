@@ -32,6 +32,7 @@ public class Time implements Serializable {
     @OneToMany(mappedBy = "timeDestino")
     private List<Time> timeDestino = new ArrayList<>();
     
+    @JsonIgnore
     @OneToMany(mappedBy = "time")
     private List<TimeTorneio> torneios = new ArrayList<>(); 
 
@@ -71,13 +72,6 @@ public class Time implements Serializable {
 		return jogadores;
 	}
 	
-	public List<TimeTorneio> getTime() {
-		return torneios;
-	}
-
-	public void setTime(List<TimeTorneio> torneios) {
-		this.torneios = torneios;
-	}
 
 	@Override
 	public int hashCode() {

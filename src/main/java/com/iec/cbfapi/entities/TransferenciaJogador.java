@@ -2,6 +2,8 @@ package com.iec.cbfapi.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name="transferencia_jogador")
@@ -25,17 +27,17 @@ public class TransferenciaJogador implements Serializable {
     @JoinColumn(name = "id_jogador")
     private Jogador jogador;
     
-    private String data;
+    private Instant data = null;
     private float valor;
     
     public TransferenciaJogador() {}
 
-    public TransferenciaJogador(Long id, Jogador jogador, Time timeOrigem, Time timeDestino, String data, float valor) {
+    public TransferenciaJogador(Long id, Jogador jogador, Time timeOrigem, Time timeDestino, float valor) {
         this.id = id;
         this.jogador = jogador;
         this.timeOrigem = timeOrigem;
         this.timeDestino = timeDestino;
-        this.data = data;
+        this.data = Instant.now();
         this.valor = valor;
     }
 
@@ -71,11 +73,11 @@ public class TransferenciaJogador implements Serializable {
         this.timeDestino = timeDestino;
     }
 
-    public String getData() {
+    public Instant getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Instant data) {
         this.data = data;
     }
 
