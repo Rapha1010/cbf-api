@@ -24,6 +24,22 @@ public class TimeTorneioPK implements Serializable {
 		this.torneioId = torneioId;
 	}
 
+	public Long getTimeId() {
+		return timeId;
+	}
+
+	public void setTimeId(Long timeId) {
+		this.timeId = timeId;
+	}
+
+	public Long getTorneioId() {
+		return torneioId;
+	}
+
+	public void setTorneioId(Long torneioId) {
+		this.torneioId = torneioId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

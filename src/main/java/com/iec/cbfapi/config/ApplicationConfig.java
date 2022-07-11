@@ -1,13 +1,8 @@
 package com.iec.cbfapi.config;
 
-import com.iec.cbfapi.entities.Jogador;
-import com.iec.cbfapi.entities.Time;
-import com.iec.cbfapi.entities.Torneio;
-import com.iec.cbfapi.entities.TransferenciaJogador;
-import com.iec.cbfapi.repositories.JogadorRepository;
-import com.iec.cbfapi.repositories.TimeRepository;
-import com.iec.cbfapi.repositories.TorneioRepository;
-import com.iec.cbfapi.repositories.TransferenciaJogadorRepository;
+import com.iec.cbfapi.entities.*;
+import com.iec.cbfapi.entities.pk.TimeTorneioPK;
+import com.iec.cbfapi.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,6 +26,9 @@ public class ApplicationConfig implements CommandLineRunner {
     
     @Autowired
     private TorneioRepository tnr;
+
+    @Autowired
+    private TimeTorneioRepository ttr;
 
 
     @Override
@@ -61,6 +59,13 @@ public class ApplicationConfig implements CommandLineRunner {
         Torneio tn3 = new Torneio(null, "Copa do Brasil", "Brasil", "CBF");
         
         tnr.saveAll(Arrays.asList(tn1, tn2, tn3));
+
+        TimeTorneio tt1 = new TimeTorneio(null, time1, tn1);
+        TimeTorneio tt2 = new TimeTorneio(null, time2, tn1);
+        TimeTorneio tt3 = new TimeTorneio(null, time3, tn1);
+        TimeTorneio tt4 = new TimeTorneio(null, time4, tn1);
+
+        ttr.saveAll(Arrays.asList(tt1, tt2, tt3, tt4));
         
 
     }

@@ -1,6 +1,7 @@
 package com.iec.cbfapi.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -33,16 +34,16 @@ public class TimeTorneio implements Serializable {
 	private Torneio torneio;
 	
 	@Column
-	private Date criadoEm = new Date();
+	private Instant criadoEm;
 
 	public TimeTorneio() {}
 
-	public TimeTorneio(TimeTorneioPK id, Time time, Torneio torneio, Date criadoEm) {
+	public TimeTorneio(TimeTorneioPK id, Time time, Torneio torneio) {
 		super();
 		this.id = id;
 		this.time = time;
 		this.torneio = torneio;
-		this.criadoEm = criadoEm;
+		this.criadoEm = Instant.now();
 	}
 
 	public TimeTorneioPK getId() {
@@ -69,11 +70,11 @@ public class TimeTorneio implements Serializable {
 		this.torneio = torneio;
 	}
 
-	public Date getCriadoEm() {
+	public Instant getCriadoEm() {
 		return criadoEm;
 	}
 
-	public void setCriadoEm(Date criadoEm) {
+	public void setCriadoEm(Instant criadoEm) {
 		this.criadoEm = criadoEm;
 	}
 
