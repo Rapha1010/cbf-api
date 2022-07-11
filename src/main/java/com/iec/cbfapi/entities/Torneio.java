@@ -28,8 +28,12 @@ public class Torneio implements Serializable {
 	private String localDisputa;
 	private String organizacao;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "torneio")
 	private List<TimeTorneio> times = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "torneio")
+	private List<Partida> partidas = new ArrayList<>();
 	
 	public Torneio() {
 	}
@@ -72,6 +76,47 @@ public class Torneio implements Serializable {
 
 	public void setOrganizacao(String organizacao) {
 		this.organizacao = organizacao;
+	}
+
+	public List<TimeTorneio> getTimes() {
+		return times;
+	}
+
+	public void setTimes(List<TimeTorneio> times) {
+		this.times = times;
+	}
+
+	public List<Partida> getPartidas() {
+		return partidas;
+	}
+
+	public void setPartidas(List<Partida> partidas) {
+		this.partidas = partidas;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Torneio other = (Torneio) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

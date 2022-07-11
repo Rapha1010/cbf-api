@@ -71,7 +71,14 @@ public class Time implements Serializable {
 	public List<Jogador> getJogadores() {
 		return jogadores;
 	}
-	
+
+	public List<TimeTorneio> getTorneios() {
+		return torneios;
+	}
+
+	public void setTorneios(List<TimeTorneio> torneios) {
+		this.torneios = torneios;
+	}
 
 	@Override
 	public int hashCode() {

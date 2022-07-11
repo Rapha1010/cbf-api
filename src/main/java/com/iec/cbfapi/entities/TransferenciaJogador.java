@@ -27,7 +27,7 @@ public class TransferenciaJogador implements Serializable {
     @JoinColumn(name = "id_jogador")
     private Jogador jogador;
     
-    private Instant data = null;
+    private Instant data = Instant.now();
     private float valor;
     
     public TransferenciaJogador() {}
@@ -37,7 +37,6 @@ public class TransferenciaJogador implements Serializable {
         this.jogador = jogador;
         this.timeOrigem = timeOrigem;
         this.timeDestino = timeDestino;
-        this.data = Instant.now();
         this.valor = valor;
     }
 

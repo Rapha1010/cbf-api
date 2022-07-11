@@ -9,8 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 @Configuration
 public class ApplicationConfig implements CommandLineRunner {
@@ -29,6 +32,9 @@ public class ApplicationConfig implements CommandLineRunner {
 
     @Autowired
     private TimeTorneioRepository ttr;
+    
+    @Autowired
+    private PartidaRepository prr;
 
 
     @Override
@@ -66,6 +72,14 @@ public class ApplicationConfig implements CommandLineRunner {
         TimeTorneio tt4 = new TimeTorneio(null, time4, tn1);
 
         ttr.saveAll(Arrays.asList(tt1, tt2, tt3, tt4));
+        
+       
+        Partida pt1 = new Partida(null,Instant.parse("2022-12-19T19:00:00Z"),null, null, time1,time2, tn1);
+        Partida pt2 = new Partida(null,Instant.parse("2022-12-21T19:00:00Z"),null, null, time3,time5, tn1);
+        Partida pt3 = new Partida(null,Instant.parse("2022-12-22T19:00:00Z"),null, null, time4,time2, tn1);
+        
+        
+        prr.saveAll(Arrays.asList(pt1,pt3,pt2));
         
 
     }

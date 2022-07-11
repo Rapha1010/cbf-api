@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iec.cbfapi.entities.pk.TimeTorneioPK;
 
 @Entity
@@ -30,6 +31,7 @@ public class TimeTorneio implements Serializable {
 	private Time time;
 	
 	@ManyToOne
+	@JsonIgnore
 	@MapsId("torneioId")
 	private Torneio torneio;
 	
@@ -39,8 +41,7 @@ public class TimeTorneio implements Serializable {
 	public TimeTorneio() {}
 
 	public TimeTorneio(TimeTorneioPK id, Time time, Torneio torneio) {
-		super();
-		this.id = id;
+		this.id = new TimeTorneioPK(time.getId(), torneio.getId());
 		this.time = time;
 		this.torneio = torneio;
 		this.criadoEm = Instant.now();
@@ -102,8 +103,5 @@ public class TimeTorneio implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }
