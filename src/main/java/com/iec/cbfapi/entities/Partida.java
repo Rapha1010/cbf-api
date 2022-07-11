@@ -2,6 +2,8 @@ package com.iec.cbfapi.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +45,9 @@ public class Partida implements Serializable {
 	@JsonIgnore
 	@JoinColumn(name = "id_torneio")
 	private Torneio torneio;
+	
+	@OneToMany(mappedBy = "partida")
+	private List<Evento> eventos = new ArrayList<>();
 	
 	public Partida() {}
 
@@ -113,5 +118,15 @@ public class Partida implements Serializable {
 	public void setTorneio(Torneio torneio) {
 		this.torneio = torneio;
 	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+	
+	
 	
 }
