@@ -44,5 +44,15 @@ public class PartidaService {
 		partida.setTorneio(obj.getTorneio());
 		partida.setDataHora(obj.getDataHora());
 	}
+	
+	public List<Partida> findAllByTorneioId(Long torneioId){
+		List<Partida> list = pr.findAllByTorneioId(torneioId);
+		return list;
+	}
+
+	public Partida findByIdAndTorneioId(Long id, Long partidaId) {
+		Partida partida = pr.findByIdAndTorneioId(id, partidaId);
+		return partida;
+	}
 
 }
