@@ -25,7 +25,7 @@ public class Evento implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private Instant dataHora;
+	private Instant dataHora = Instant.now();
 	private String descricao;
 	
 	@ManyToOne
@@ -35,10 +35,9 @@ public class Evento implements Serializable {
 	
 	public Evento() {}
 
-	public Evento(Long id, Instant dataHora, String descricao, Partida partida) {
+	public Evento(Long id, String descricao, Partida partida) {
 		super();
 		this.id = id;
-		this.dataHora = dataHora;
 		this.descricao = descricao;
 		this.partida = partida;
 	}

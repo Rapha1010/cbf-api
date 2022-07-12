@@ -68,10 +68,10 @@ public class TorneioController {
 		return ResponseEntity.ok().body(ts.insert(obj));
 	}
 	
-//	@PostMapping(value ="/{id}/partidas/{partidaId}/eventos")
-//	public ResponseEntity<Evento> insertEventos(@PathVariable Long partidaId , @RequestBody Evento obj) {
-//		return ResponseEntity.ok().body(es.insert(partidaId, obj));
-//	}
+	@RequestMapping(value ="/{id}/partidas/{partidaId}/eventos")
+	public ResponseEntity<Evento> insertEventos(@PathVariable Long partidaId, @RequestBody Evento obj) {
+		return ResponseEntity.ok().body(es.insert(partidaId, obj));
+	}
 	
 	@PatchMapping
 	public Torneio update(@RequestBody Torneio obj) {

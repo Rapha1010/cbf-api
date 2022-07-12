@@ -84,11 +84,11 @@ public class ApplicationConfig implements CommandLineRunner {
         
         prr.saveAll(Arrays.asList(pt1,pt3,pt2));
         
-        Evento ev1 = new Evento(null,Instant.parse("2022-12-19T19:00:00Z"), "gol", pt1);
-        Evento ev2 = new Evento(null,Instant.parse("2022-12-19T19:00:00Z"), "cartao vermelho", pt1);
-        Evento ev3 = new Evento(null,Instant.parse("2022-12-19T19:00:00Z"), "falta", pt1);
-        Evento ev5 = new Evento(null,Instant.parse("2022-12-19T19:00:00Z"), "impedimento", pt1);
-        Evento ev6 = new Evento(null,Instant.parse("2022-12-19T19:00:00Z"), "penalti", pt1);
+        Evento ev1 = new Evento(null, "gol", pt1);
+        Evento ev2 = new Evento(null, "cartao vermelho", pt1);
+        Evento ev3 = new Evento(null, "falta", pt1);
+        Evento ev5 = new Evento(null, "impedimento", pt1);
+        Evento ev6 = new Evento(null, "penalti", pt1);
         
         err.saveAll(Arrays.asList(ev1,ev2,ev3,ev5,ev6));
 

@@ -1,5 +1,6 @@
 package com.iec.cbfapi.services;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,21 @@ public class EventoService {
 	
 	@Autowired
 	private EventoRepository er;
+	
+	@Autowired
+	private PartidaService ps;
 
 	public List<Evento> findAllByPartidaId(Long partidaId) {
 		List<Evento> evento = er.findAllByPartidaId(partidaId);
 		return evento;
+	}
+	
+	
+	public Evento insert(Long partidaId, Evento obj) {
+		
+		Partida partida = ps.findById(partidaId);
+	    Evento evento = new Evento(null, obj.getDescricao(), partida);
+		return er.save(evento);
 	}
 	
 	
