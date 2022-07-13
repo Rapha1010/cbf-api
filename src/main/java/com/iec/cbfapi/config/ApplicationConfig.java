@@ -4,6 +4,7 @@ import com.iec.cbfapi.entities.*;
 import com.iec.cbfapi.entities.pk.TimeTorneioPK;
 import com.iec.cbfapi.repositories.*;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.sound.midi.Receiver;
 
 @Configuration
 public class ApplicationConfig implements CommandLineRunner {
@@ -38,7 +41,6 @@ public class ApplicationConfig implements CommandLineRunner {
     
     @Autowired
     private EventoRepository err;
-
 
     @Override
     public void run(String... args) throws Exception {

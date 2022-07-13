@@ -18,17 +18,22 @@ public class EventoService {
 	
 	@Autowired
 	private PartidaService ps;
+	
+	@Autowired
+	private RabbitmqService rs;
 
 	public List<Evento> findAllByPartidaId(Long partidaId) {
 		List<Evento> evento = er.findAllByPartidaId(partidaId);
 		return evento;
 	}
 	
-	
 	public Evento insert(Long partidaId, Evento obj) {
 		
 		Partida partida = ps.findById(partidaId);
 	    Evento evento = new Evento(null, obj.getDescricao(), partida);
+	    
+	    rs.sendMessage("EVENTOS", evento);
+	    
 		return er.save(evento);
 	}
 	
