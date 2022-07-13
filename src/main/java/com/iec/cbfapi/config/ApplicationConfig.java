@@ -90,7 +90,7 @@ public class ApplicationConfig implements CommandLineRunner {
         Evento ev2 = new Evento(null, "cartao vermelho", pt1);
         Evento ev3 = new Evento(null, "falta", pt1);
         Evento ev5 = new Evento(null, "impedimento", pt1);
-        Evento ev6 = new Evento(null, "penalti", pt1);
+        Evento ev6 = new Evento(null, "penalte", pt1);
         
         err.saveAll(Arrays.asList(ev1,ev2,ev3,ev5,ev6));
 
