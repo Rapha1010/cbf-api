@@ -3,6 +3,7 @@ package com.iec.cbfapi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +24,10 @@ public class JogadorController {
 	private JogadorService js;
 	
 	@GetMapping
+	@Cacheable
 	public ResponseEntity<List<Jogador>> findAll() {
 		List<Jogador> list =  js.findAll();
+		System.out.println("sem cache");
 		return ResponseEntity.ok().body(list);
 	}
 	

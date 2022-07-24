@@ -1,24 +1,25 @@
 package com.iec.cbfapi.config;
 
 import com.iec.cbfapi.entities.*;
-import com.iec.cbfapi.entities.pk.TimeTorneioPK;
 import com.iec.cbfapi.repositories.*;
-
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-
-import javax.sound.midi.Receiver;
 
 @Configuration
+@EnableRedisRepositories
 public class ApplicationConfig implements CommandLineRunner {
 
     @Autowired
@@ -41,7 +42,7 @@ public class ApplicationConfig implements CommandLineRunner {
     
     @Autowired
     private EventoRepository err;
-
+    
     @Override
     public void run(String... args) throws Exception {
 
@@ -83,8 +84,12 @@ public class ApplicationConfig implements CommandLineRunner {
         Partida pt2 = new Partida(null,Instant.parse("2022-12-21T19:00:00Z"),null, null, time3,time5, tn1);
         Partida pt3 = new Partida(null,Instant.parse("2022-12-22T19:00:00Z"),null, null, time4,time2, tn1);
         
+        Partida pt4 = new Partida(null,Instant.parse("2022-12-19T19:00:00Z"),null, null, time1,time5, tn2);
+        Partida pt5 = new Partida(null,Instant.parse("2022-12-21T19:00:00Z"),null, null, time3,time4, tn2);
+        Partida pt6 = new Partida(null,Instant.parse("2022-12-22T19:00:00Z"),null, null, time4,time2, tn2);
         
-        prr.saveAll(Arrays.asList(pt1,pt3,pt2));
+        
+        prr.saveAll(Arrays.asList(pt1,pt3,pt2,pt4,pt5,pt6));
         
         Evento ev1 = new Evento(null, "gol", pt1);
         Evento ev2 = new Evento(null, "cartao vermelho", pt1);
@@ -95,5 +100,27 @@ public class ApplicationConfig implements CommandLineRunner {
         err.saveAll(Arrays.asList(ev1,ev2,ev3,ev5,ev6));
 
     }
+
+    @Bean
+    public JedisConnectionFactory connectionFactory() {
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName("localhost");
+        configuration.setPort(6379);
+        return new JedisConnectionFactory(configuration);
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> template() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory());
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new JdkSerializationRedisSerializer());
+        template.setValueSerializer(new JdkSerializationRedisSerializer());
+        template.setEnableTransactionSupport(true);
+        template.afterPropertiesSet();
+        return template;
+    }
+
 
 }

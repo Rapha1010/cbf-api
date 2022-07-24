@@ -1,6 +1,5 @@
 package com.iec.cbfapi.services;
 
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.iec.cbfapi.entities.Evento;
 import com.iec.cbfapi.entities.Partida;
+import com.iec.cbfapi.entities.RedisEvento;
 import com.iec.cbfapi.repositories.EventoRepository;
+import com.iec.cbfapi.repositories.RedisEventoRepository;
 
 @Service
 public class EventoService {
@@ -21,22 +22,40 @@ public class EventoService {
 	
 	@Autowired
 	private RabbitmqService rs;
+	
+	@Autowired
+	private RedisEventoRepository redisEventoRepository;
 
-	public List<Evento> findAllByPartidaId(Long partidaId) {
-		List<Evento> evento = er.findAllByPartidaId(partidaId);
+	public List<RedisEvento> findAllByPartidaId(Long partidaId) {
+		List<RedisEvento> evento = redisEventoRepository.findAll(hashKey(partidaId));
 		return evento;
 	}
 	
 	public Evento insert(Long partidaId, Evento obj) {
-		
 		Partida partida = ps.findById(partidaId);
-	    Evento evento = new Evento(null, obj.getDescricao(), partida);
-	    
-	    rs.sendMessage("EVENTOS", evento);
-	    
+		Evento evento = new Evento(null, obj.getDescricao(), partida);
+		saveEventoInRabbitMq(evento);
+		saveEventoInRedis(er.save(evento));
 		return er.save(evento);
 	}
 	
+	public String hashKey(Long partidaId) {
+		Partida partida = ps.findById(partidaId);
+		String hashKey = "torneio_"+partida.getTorneio().getId()+"_partida_"+partida.getId();
+		return hashKey;
+	}
 	
+	public void saveEventoInRedis(Evento evento) {
+		RedisEvento redisEvento = new RedisEvento();
+		redisEvento.setId(evento.getId());
+		redisEvento.setDataHora(evento.getDataHora());
+		redisEvento.setDescricao(evento.getDescricao());
+		redisEvento.setIdPartida(evento.getPartida().getId());
+		redisEventoRepository.save(hashKey(evento.getPartida().getId()),redisEvento);
+	}
+	
+	public void saveEventoInRabbitMq(Evento evento) {
+		rs.sendMessage("EVENTOS", evento);
+	}
 
 }

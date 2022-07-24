@@ -15,6 +15,7 @@ services :
         volumes:
             - ./rabbitmqData:/var/lib/rabbitmq
         environment:
+                - SPRING_RABBITMQ_HOST=rabbitmq
                 - RABBITMQ_DEFAULT_USER=admin
                 - RABBITMQ_DEFAULT_PASS=123456
     
