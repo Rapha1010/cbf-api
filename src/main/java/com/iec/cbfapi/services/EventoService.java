@@ -34,9 +34,11 @@ public class EventoService {
 	public Evento insert(Long partidaId, Evento obj) {
 		Partida partida = ps.findById(partidaId);
 		Evento evento = new Evento(null, obj.getDescricao(), partida);
-		saveEventoInRabbitMq(evento);
-		saveEventoInRedis(er.save(evento));
-		return er.save(evento);
+		Evento responseSave = er.save(evento);
+		
+		saveEventoInRabbitMq(responseSave);
+		saveEventoInRedis(responseSave);
+		return responseSave;
 	}
 	
 	public String hashKey(Long partidaId) {

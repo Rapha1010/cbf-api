@@ -2,6 +2,7 @@ package com.iec.cbfapi.config;
 
 import com.iec.cbfapi.entities.*;
 import com.iec.cbfapi.repositories.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cache.annotation.EnableCaching;
@@ -121,6 +122,5 @@ public class ApplicationConfig implements CommandLineRunner {
         template.afterPropertiesSet();
         return template;
     }
-
 
 }

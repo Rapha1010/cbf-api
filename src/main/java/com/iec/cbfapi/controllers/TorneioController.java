@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -88,18 +89,24 @@ public class TorneioController {
 	
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Torneio> insert(@Valid @RequestBody Torneio obj) {
-		return ResponseEntity.ok().body(ts.insert(obj));
+		return new ResponseEntity<>(ts.insert(obj), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value ="/{id}/partidas/{partidaId}/eventos")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public ResponseEntity<Evento> insertEventos(@PathVariable Long partidaId, @RequestBody Evento obj) {
-		return ResponseEntity.ok().body(es.insert(partidaId, obj));
+		return new ResponseEntity<>(es.insert(partidaId, obj), HttpStatus.CREATED);
 	}
 	
-	@PatchMapping
+	@RequestMapping(value ="/{torneioId}/partidas")
+	public ResponseEntity<Partida> insertPartida(@PathVariable Long torneioId, @RequestBody Partida obj) {
+		Torneio torneio = ts.findById(torneioId);
+		obj.setTorneio(torneio);
+		return new ResponseEntity<>(ts.insertPartidaInTorneio(obj), HttpStatus.CREATED);
+	}
+	
+	@PutMapping
 	public Torneio update(@RequestBody Torneio obj) {
 		return ts.update(obj);
 	}
