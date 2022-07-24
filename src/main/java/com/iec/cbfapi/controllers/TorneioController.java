@@ -2,16 +2,21 @@ package com.iec.cbfapi.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iec.cbfapi.entities.Evento;
@@ -47,6 +52,9 @@ public class TorneioController {
 	public ResponseEntity<Torneio> findById(@PathVariable Long id) {
 		Torneio torneio = ts.findById(id);
 		logger.info("ENDPOINT (FINDBYID TORNEIO) TORNEIO_ID REQUESTED="+ id);
+		
+		if(torneio == null) return ResponseEntity.notFound().build();
+	
 		return ResponseEntity.ok().body(torneio);
 	}
 	
@@ -61,13 +69,15 @@ public class TorneioController {
 	public ResponseEntity<Partida> findPartida(@PathVariable Long id, @PathVariable Long partidaId) {
 		Partida partida = ps.findByIdAndTorneioId(id, partidaId);
 		logger.info("ENDPOINT (FINDBYID PARTIDA) REQUESTED TORNEIO_ID = " +id+", PARTIDA_ID ="+partidaId);
+		
+		if (partida == null) return ResponseEntity.notFound().build();
+		
 		return ResponseEntity.ok().body(partida);
 	}
 	
 	@GetMapping(value ="/{id}/partidas/{partidaId}/eventos")
 	public ResponseEntity<List<RedisEvento>> findAllEventsByPartida(@PathVariable Long id, @PathVariable Long partidaId) {
 		logger.info("ENDPOINT (FINDBYID PARTIDA) REQUESTED TORNEIO_ID = " +id+", PARTIDA_ID ="+partidaId);
-		Partida partida = ps.findByIdAndTorneioId(id, partidaId);
 		List<RedisEvento> list = es.findAllByPartidaId(partidaId);
 		
 		if(!list.isEmpty())
@@ -78,11 +88,13 @@ public class TorneioController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Torneio> insert(@RequestBody Torneio obj) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Torneio> insert(@Valid @RequestBody Torneio obj) {
 		return ResponseEntity.ok().body(ts.insert(obj));
 	}
 	
 	@RequestMapping(value ="/{id}/partidas/{partidaId}/eventos")
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Evento> insertEventos(@PathVariable Long partidaId, @RequestBody Evento obj) {
 		return ResponseEntity.ok().body(es.insert(partidaId, obj));
 	}

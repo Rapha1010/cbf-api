@@ -23,7 +23,7 @@ public class TorneioService {
 	
 	public Torneio findById(Long id) {	
 		Optional<Torneio> obj = tr.findById(id);
-		return obj.get();
+		return obj.orElse(null);
 	}
 	
 	public Torneio insert(Torneio obj) {
